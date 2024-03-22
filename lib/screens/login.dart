@@ -34,26 +34,34 @@ class LoginScreen extends StatelessWidget {
         MaterialPageRoute(builder: (ctx) => const HomeScreen()),
       );
     } else {
-      showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: const Text('Error'),
-            // content:   const Text('Invalid username or password. Please try again.'),
-            actions: [
-              const Text('Invalid username or password. Please try again.'),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Ok'))
-            ],
-          );
-        },
+      showErrorMessage(
+        context,
+        'Invalid username or password. Please try again.',
       );
+
       // usernameController.clear();
       passwordController.clear();
     }
+  }
+
+  void showErrorMessage(BuildContext context, String dialog) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: const Text('Error'),
+          // content:   const Text('Invalid username or password. Please try again.'),
+          actions: [
+            Text(dialog),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Ok'))
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -94,6 +102,11 @@ class LoginScreen extends StatelessWidget {
                 controller: passwordController,
                 // onChanged: (value) => passWord = value,
                 textInputAction: TextInputAction.done,
+                onSubmitted: (_) {
+                  // Call the login function when "Done" is pressed
+                  isValidUser(usernameController.text, passwordController.text,
+                      context);
+                },
                 decoration: InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(
