@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -32,6 +33,13 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -46,46 +54,56 @@ class HomeScreen extends StatelessWidget {
               ))),
           SizedBox(
             height: sizedBoxHeight,
-            child: ListView(
-              children: [
-                Image.asset(
-                  'assets/images/1.jpg',
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.fill,
-                ),
-                const SizedBox(height: 20),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.asset(
-                    'assets/images/2.jpg',
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Image.asset(
-                  'assets/images/3.jpg',
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.fitWidth,
-                ),
-                const SizedBox(height: 20),
-                Image.asset(
-                  'assets/images/4.jpg',
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.cover,
-                ),
-                const SizedBox(height: 20),
-                Image.asset(
-                  'assets/images/5.jpg',
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.fill,
-                ),
-              ],
+            child: ListView.builder(
+              itemCount: imagePaths.length,
+              itemBuilder: (ctx, index) {
+                if (index % 2 == 0) {
+                  return Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.asset(
+                          imagePaths[index],
+                          width: double.infinity,
+                          height: 250,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'Image ${index + 1}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      Image.asset(
+                        imagePaths[index],
+                        width: double.infinity,
+                        height: 250,
+                        fit: BoxFit.fill,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'Image ${index + 1}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
           ),
         ],
