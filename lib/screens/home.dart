@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key, required this.username});
@@ -14,6 +15,11 @@ class HomeScreen extends StatelessWidget {
     'assets/images/6.jpg',
     'assets/images/7.jpg',
   ];
+
+  Future<void> _logout() async {
+    final sharedPreference = await SharedPreferences.getInstance();
+    await sharedPreference.remove('user');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
+                _logout();
                 Navigator.of(context).pop();
               },
               icon: const Icon(Icons.logout))

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_login_page/models/user.dart';
 import 'package:simple_login_page/screens/home.dart';
 
@@ -30,6 +31,7 @@ class LoginScreen extends StatelessWidget {
     }
 
     if (isUserValid) {
+      _storeUserCredentials(enteredUsername);
       Navigator.of(context)
           .push(
             MaterialPageRoute(
@@ -54,6 +56,13 @@ class LoginScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _storeUserCredentials(String enteredUsername) async {
+    final sharedPreference = await SharedPreferences.getInstance();
+    await sharedPreference.setString('user', enteredUsername);
+
+    //print(sharedPreference.getString('user'));
+  }
+
   void showErrorMessage(BuildContext context, String dialog) {
     showDialog(
       context: context,
@@ -74,8 +83,23 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  Future<void> _isAlreadyLoggedIn(BuildContext context) async {
+    final sharedPreference = await SharedPreferences.getInstance();
+    final storedUsername = sharedPreference.getString('user');
+
+    if (storedUsername != null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (ctx) => HomeScreen(
+                  username: storedUsername,
+                )),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _isAlreadyLoggedIn(context);
     return GestureDetector(
       onTap: () {
         // Dismiss the keyboard and unfocus the text field
