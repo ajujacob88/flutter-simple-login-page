@@ -19,7 +19,8 @@ class HomeScreen extends StatelessWidget {
 
   Future<void> _logout() async {
     final sharedPreference = await SharedPreferences.getInstance();
-    await sharedPreference.remove('user');
+    // await sharedPreference.remove('user');
+    await sharedPreference.clear();
   }
 
   @override
@@ -42,10 +43,11 @@ class HomeScreen extends StatelessWidget {
           IconButton(
               onPressed: () {
                 _logout();
-                Navigator.of(context).pushReplacement(
+                Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                     builder: ((ctx) => LoginScreen()),
                   ),
+                  (route) => false,
                 );
               },
               icon: const Icon(Icons.logout))

@@ -18,7 +18,8 @@ class LoginScreen extends StatelessWidget {
 
     if (enteredUsername.isEmpty || enteredPassword.isEmpty) {
       // Show an error message for empty fields
-      showErrorMessage(context, 'Username or password cannot be empty.');
+      showErrorMessageviaSnackBar(
+          context, 'Username or password cannot be empty.');
       return;
     }
 
@@ -74,13 +75,20 @@ class LoginScreen extends StatelessWidget {
             Text(dialog),
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(ctx).pop();
                 },
                 child: const Text('Ok'))
           ],
         );
       },
     );
+  }
+
+  void showErrorMessageviaSnackBar(BuildContext context, String dialog) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+        content: Text(dialog)));
   }
 
   @override

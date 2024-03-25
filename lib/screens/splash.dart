@@ -23,16 +23,18 @@ class _SplashScreenState extends State<SplashScreen> {
     final sharedPreference = await SharedPreferences.getInstance();
     final storedUsername = sharedPreference.getString('user');
 
-    if (storedUsername != null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-            builder: (ctx) => HomeScreen(
-                  username: storedUsername,
-                )),
-      );
-    } else {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: ((ctx) => LoginScreen())));
+    if (mounted) {
+      if (storedUsername != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+              builder: (ctx) => HomeScreen(
+                    username: storedUsername,
+                  )),
+        );
+      } else {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: ((ctx) => LoginScreen())));
+      }
     }
   }
 
