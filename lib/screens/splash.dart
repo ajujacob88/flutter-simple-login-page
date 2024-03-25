@@ -19,10 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> initialScreen() async {
     await Future.delayed(const Duration(seconds: 3));
-    _isAlreadyLoggedIn(context);
-  }
 
-  Future<void> _isAlreadyLoggedIn(BuildContext context) async {
     final sharedPreference = await SharedPreferences.getInstance();
     final storedUsername = sharedPreference.getString('user');
 
