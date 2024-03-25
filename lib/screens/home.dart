@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_login_page/screens/login.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key, required this.username});
@@ -41,7 +42,11 @@ class HomeScreen extends StatelessWidget {
           IconButton(
               onPressed: () {
                 _logout();
-                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: ((ctx) => LoginScreen()),
+                  ),
+                );
               },
               icon: const Icon(Icons.logout))
         ],

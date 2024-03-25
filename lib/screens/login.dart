@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
     if (isUserValid) {
       _storeUserCredentials(enteredUsername);
       Navigator.of(context)
-          .push(
+          .pushReplacement(
             MaterialPageRoute(
                 builder: (ctx) => HomeScreen(
                       username: enteredUsername,
@@ -83,23 +83,8 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _isAlreadyLoggedIn(BuildContext context) async {
-    final sharedPreference = await SharedPreferences.getInstance();
-    final storedUsername = sharedPreference.getString('user');
-
-    if (storedUsername != null) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (ctx) => HomeScreen(
-                  username: storedUsername,
-                )),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    _isAlreadyLoggedIn(context);
     return GestureDetector(
       onTap: () {
         // Dismiss the keyboard and unfocus the text field
