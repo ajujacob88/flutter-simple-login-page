@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:simple_login_page/screens/login.dart';
+//import 'package:simple_login_page/screens/login.dart';
+import 'package:simple_login_page/screens/splash.dart';
 
 final theme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
@@ -20,7 +21,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      home: LoginScreen(),
+      home: const SplashScreen(),
     );
   }
 }
